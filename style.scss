@@ -1,0 +1,83 @@
+$widthBalloon: 400px;
+$countBalloon: 4;
+
+
+
+//from sass documentation
+@for $i from 1 through $countBalloon {
+
+    //from animista
+    @keyframes balloon-fly-#{$i} {
+        0% {
+            left: -$widthBalloon;
+            top: random(90)+vh;
+        }
+
+        50% {
+            left: random(60)+vw;
+            top: random(90)+vh;
+        }
+
+        100% {
+            left: 100vw;
+            top: random(90)+vh;
+        }
+    }
+}
+
+h1 {
+    color: rgb(255, 60, 167);
+    font-size: 15vh;
+    text-shadow: 3px 3px 1px white;
+}
+
+body {
+    counter-reset: count;
+    height: 100vh;
+    margin: 0;
+    background-image: url(img/bgi.jpeg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+.balloon-check {
+    // display: none;
+    position: absolute;
+    visibility: hidden;
+    left: -9999999px;
+}
+
+.balloon-check:checked {
+    counter-increment: count;
+
+    &~label {
+        display: none;
+    }
+}
+
+.counte-info {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+
+    &::before {
+        content: counter(count);
+    }
+}
+
+.balloon {
+    position: absolute;
+
+    &__img {
+        width: $widthBalloon;
+    }
+
+    @for $i from 1 through $countBalloon {
+        &_#{$i} {
+            animation: balloon-fly-#{$i} 5s ease-in #{$i}s both;
+        }
+    }
+}
